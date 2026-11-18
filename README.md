@@ -24,18 +24,14 @@ STEP 8: Use heatmap method of representation to show relationships between two v
 
 ## CODING AND OUTPUT
 ```
-# STEP 1: IMPORT REQUIRED PACKAGES
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from google.colab import files
 
-# Upload Dataset
 uploaded = files.upload()
 
-# Read Dataset
 filename = list(uploaded.keys())[0]
 df = pd.read_csv(filename)
 
@@ -49,23 +45,16 @@ print("\nMissing Values:")
 print(df.isnull().sum())
 
 
-# STEP 2: REPLACE NULL VALUES USING MEAN, MEDIAN OR MODE
-
-# Replace Age null values with Median
 df['Age'] = df['Age'].fillna(df['Age'].median())
 
-# Replace Embarked null values with Mode
 df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode()[0])
 
-# Drop Cabin because it contains too many missing values
 if 'Cabin' in df.columns:
     df.drop('Cabin', axis=1, inplace=True)
 
 print("\nDataset after handling null values:")
 print(df.isnull().sum())
 
-
-# STEP 3: ANALYZE OUTLIERS USING BOXPLOT
 
 plt.figure(figsize=(8, 5))
 sns.boxplot(x=df['Age'])
@@ -78,8 +67,6 @@ plt.title("Boxplot of Fare")
 plt.show()
 
 
-# STEP 4: REMOVE OUTLIERS USING IQR METHOD
-
 Q1 = df['Fare'].quantile(0.25)
 Q3 = df['Fare'].quantile(0.75)
 
@@ -91,7 +78,6 @@ Upper_Bound = Q3 + 1.5 * IQR
 print("\nLower Bound:", Lower_Bound)
 print("Upper Bound:", Upper_Bound)
 
-# Remove outliers
 df = df[(df['Fare'] >= Lower_Bound) & (df['Fare'] <= Upper_Bound)]
 
 print("\nDataset after removing outliers:")
@@ -99,8 +85,6 @@ print(df.head())
 
 print("\nDataset Shape:", df.shape)
 
-
-# STEP 5: COUNTPLOT FOR CATEGORICAL DATA
 
 plt.figure(figsize=(6, 4))
 sns.countplot(x='Survived', data=df)
@@ -118,8 +102,6 @@ plt.title("Passenger Class Count")
 plt.show()
 
 
-# STEP 6: DISplot FOR UNIVARIATE DISTRIBUTION
-
 sns.displot(data=df, x='Age', kde=True)
 plt.title("Age Distribution")
 plt.show()
@@ -129,15 +111,11 @@ plt.title("Fare Distribution")
 plt.show()
 
 
-# STEP 7: CROSS TABULATION
-
 cross_tab = pd.crosstab(df['Sex'], df['Survived'])
 
 print("\nCross Tabulation of Sex and Survived:")
 print(cross_tab)
 
-
-# STEP 8: HEATMAP
 
 numeric_df = df.select_dtypes(include=np.number)
 
@@ -147,8 +125,6 @@ sns.heatmap(numeric_df.corr(), annot=True, cmap='coolwarm', fmt='.2f')
 plt.title("Correlation Heatmap")
 plt.show()
 
-
-# FINAL OUTPUT
 
 print("\nFinal Cleaned Dataset:")
 print(df.head())
