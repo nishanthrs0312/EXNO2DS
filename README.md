@@ -24,9 +24,6 @@ STEP 8: Use heatmap method of representation to show relationships between two v
 
 ## CODING AND OUTPUT
 ```
-
-# EXPERIMENT: DATA CLEANSING, OUTLIER REMOVAL AND EDA
-
 # STEP 1: IMPORT REQUIRED PACKAGES
 
 import pandas as pd
